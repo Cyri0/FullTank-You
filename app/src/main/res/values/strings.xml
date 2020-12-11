@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">FullTank You</string>
+    <string-array name="gas_stations">
+        <item>-</item>
+        <item>Shell</item>
+        <item>MOL</item>
+        <item>OMV</item>
+        <item>Auchan</item>
+        <item>Lukoil</item>
+        <item>Envi</item>
+        <item>Egyéb</item>
+    </string-array>
+
+</resources>
