@@ -1,29 +1,35 @@
 package com.example.fulltankyou
 
-import android.icu.util.TimeUnit
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.SystemClock
 import android.widget.*
-import org.jetbrains.annotations.Nullable
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var actualKm: EditText
     lateinit var actualL: EditText
     lateinit var actualPrice: EditText
-
     lateinit var gasStation: Spinner
+    lateinit var actualDate: TextView
+    lateinit var currentDate: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        actualDate = findViewById(R.id.actualdate)
         actualKm = findViewById(R.id.actualkm)
         actualL = findViewById(R.id.actualpetrol)
         actualPrice = findViewById(R.id.actualmoney)
-        
+
+        val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
+        currentDate = simpleDateFormat.format(Date())
+
+        actualDate.text = currentDate
+
+
         gasStation = findViewById(R.id.actualgasstation)
         ArrayAdapter.createFromResource(
             this,
@@ -35,14 +41,13 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val save_refuelingBtn: Button = findViewById(R.id.save_refuelingBtn);
-        save_refuelingBtn.setOnClickListener {
-            save_refueling()
+        val saveRefuelingBtn: Button = findViewById(R.id.save_refuelingBtn);
+        saveRefuelingBtn.setOnClickListener {
+            saveRefueling()
         }
     }
 
-    private fun save_refueling() {
-
+    private fun saveRefueling() {
         var actualKmNum = 0.0
         var actualPriceNum = 0.0
         var actualLNum = 0.0
@@ -56,24 +61,57 @@ class MainActivity : AppCompatActivity() {
         if(!actualPrice.text.isNullOrEmpty())
             actualPriceNum = actualPrice.text.toString().toDouble()
 
-       // val gasstation = gasStation.onItemSelectedListener
+        val gasstation = gasStation.getSelectedItem().toString();
 
-        var error_msg = ""
+        var errorMsg = ""
 
         if(actualKmNum <= 0){
-            error_msg += "Hibás a km megadása! "
+            errorMsg += "Hibás a km megadása! "
         }
         if(actualLNum <= 0){
-            error_msg += "Hibás a mennyiség megadása! "
+            errorMsg += "Hibás a mennyiség megadása! "
         }
         if(actualPriceNum <= 0){
-            error_msg += "Hibás az ár megadása! "
+            errorMsg += "Hibás az ár megadása! "
         }
 
-        if(error_msg.isEmpty()) {
-            Toast.makeText(this, "Km: " + actualKmNum + " L: " + actualLNum + " Ár: " + actualPriceNum + "Ft", Toast.LENGTH_SHORT).show()
+        if(errorMsg.isEmpty()) {
+            Toast.makeText(this, "Km: " + actualKmNum + " L: " + actualLNum + " Ár: " + actualPriceNum + "Ft" + " Benzinkút: " + gasstation, Toast.LENGTH_SHORT).show()
+
+            val actual = Refuel(actualLNum, actualKmNum, actualPriceNum, gasstation, Date())
+
+            println()
+            println(actual.toString())
+            println()
+            println(actual.getDateString())
+
         } else{
-            Toast.makeText(this, error_msg, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show()
         }
+    }
+}
+
+class Refuel {
+
+    private var fuelLiter: Double
+    private var actualKm: Double
+    private var price: Double
+    private var stationName: String
+    private var date: Date
+
+    constructor(fuelLiter: Double, actualKm: Double, price: Double, stationName: String, date: Date){
+        this.fuelLiter = fuelLiter
+        this.actualKm = actualKm
+        this.price = price
+        this.stationName = stationName
+        this.date = date
+    }
+
+    fun getDateString(): String{
+        return SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(this.date)
+    }
+
+    override fun toString(): String {
+        return "Refuel(fuelLiter=$fuelLiter, actualKm=$actualKm, price=$price, stationName='$stationName')"
     }
 }

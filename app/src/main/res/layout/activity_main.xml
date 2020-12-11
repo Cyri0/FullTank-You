@@ -30,6 +30,30 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:width="150sp"
+            android:text="Dátum:"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/actualdate"
+            android:layout_width="200sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20sp"
+        android:layout_marginBottom="20sp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:width="150sp"
             android:text="Kilométer óra állása:"
             android:textStyle="bold" />
 
