@@ -1,12 +1,15 @@
 package com.example.fulltankyou
 
+import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
+import com.example.fulltankyou.databinding.ActivityMainBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
 
     lateinit var actualKm: EditText
     lateinit var actualL: EditText
@@ -17,20 +20,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        actualDate = findViewById(R.id.actualdate)
-        actualKm = findViewById(R.id.actualkm)
-        actualL = findViewById(R.id.actualpetrol)
-        actualPrice = findViewById(R.id.actualmoney)
+        actualDate = binding.actualdate
+        actualKm = binding.actualkm
+        actualL = binding.actualpetrol
+        actualPrice = binding.actualmoney
 
-        val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
+        val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm")
         currentDate = simpleDateFormat.format(Date())
 
         actualDate.text = currentDate
 
-
-        gasStation = findViewById(R.id.actualgasstation)
+        gasStation = binding.actualgasstation
         ArrayAdapter.createFromResource(
             this,
             R.array.gas_stations,
@@ -40,8 +42,7 @@ class MainActivity : AppCompatActivity() {
             gasStation.adapter = adapter
         }
 
-
-        val saveRefuelingBtn: Button = findViewById(R.id.save_refuelingBtn);
+        val saveRefuelingBtn: Button = binding.saveRefuelingBtn;
         saveRefuelingBtn.setOnClickListener {
             saveRefueling()
         }
@@ -76,18 +77,25 @@ class MainActivity : AppCompatActivity() {
         }
 
         if(errorMsg.isEmpty()) {
-            Toast.makeText(this, "Km: " + actualKmNum + " L: " + actualLNum + " Ár: " + actualPriceNum + "Ft" + " Benzinkút: " + gasstation, Toast.LENGTH_SHORT).show()
-
             val actual = Refuel(actualLNum, actualKmNum, actualPriceNum, gasstation, Date())
-
-            println()
-            println(actual.toString())
-            println()
+            calculateConsumption(Refuel(25.0,150000.0, 87000.0, "-", Date()), actual)
             println(actual.getDateString())
 
         } else{
             Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun calculateConsumption(last: Refuel, new:Refuel){
+        var distanceTraveled = new.getActualKm() - last.getActualKm()
+        var petrolPerHundredKm =  (new.getFuelLiter() / distanceTraveled) * 100
+        var pricePerLiter = new.getPrice() / new.getFuelLiter()
+
+        Toast.makeText(this,
+                    "Megtett táv: " + distanceTraveled +
+                        " Fogyasztás 100 km-en: " + "%.2f".format(petrolPerHundredKm) + "l" +
+                        " egy liter ára: " + "%.1f".format(pricePerLiter),
+                Toast.LENGTH_SHORT).show()
     }
 }
 
@@ -109,6 +117,24 @@ class Refuel {
 
     fun getDateString(): String{
         return SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(this.date)
+    }
+
+    fun getFuelLiter():Double{
+        return fuelLiter
+    }
+
+    fun getActualKm():Double{
+        return actualKm
+    }
+
+    fun getPrice():Double{
+        return price
+    }
+
+    fun getStationName():String{
+        if(stationName == "-" || stationName == "Egyéb")
+            return ""
+        return stationName
     }
 
     override fun toString(): String {

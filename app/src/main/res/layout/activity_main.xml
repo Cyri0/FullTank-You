@@ -1,36 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_gravity="center_vertical"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Új tankolás"
-        android:textStyle="bold"
-        android:textSize="30sp"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20sp"
-        android:layout_marginBottom="20sp"
-        android:orientation="horizontal">
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:width="150sp"
-            android:text="Dátum:"
+            android:layout_gravity="center_horizontal"
+            android:text="Új tankolás"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <TextView
@@ -38,118 +24,120 @@
             android:layout_width="200sp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            />
-    </LinearLayout>
+            android:textAlignment="center" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20sp"
-        android:layout_marginBottom="20sp"
-        android:orientation="horizontal">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:width="150sp"
-            android:text="Kilométer óra állása:"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/actualkm"
-            android:layout_width="200sp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:inputType="numberDecimal" />
-    </LinearLayout>
+            android:layout_marginTop="20sp"
+            android:layout_marginBottom="20sp"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20sp"
-        android:layout_marginBottom="20sp"
-        android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:width="150sp"
+                android:text="Kilométer óra állása:"
+                android:textStyle="bold" />
 
-        <TextView
+            <EditText
+                android:id="@+id/actualkm"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:inputType="numberDecimal" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:width="150sp"
-            android:text="Tankolt mennyiség (l)"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/actualpetrol"
-            android:layout_width="200sp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:inputType="numberDecimal" />
-    </LinearLayout>
+            android:layout_marginTop="20sp"
+            android:layout_marginBottom="20sp"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20sp"
-        android:layout_marginBottom="20sp"
-        android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:width="150sp"
+                android:text="Tankolt mennyiség (l)"
+                android:textStyle="bold" />
 
-        <TextView
+            <EditText
+                android:id="@+id/actualpetrol"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:inputType="numberDecimal" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:width="150sp"
-            android:text="Fizetett összeg (Ft): "
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/actualmoney"
-            android:layout_width="200sp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:inputType="numberDecimal" />
-    </LinearLayout>
+            android:layout_marginTop="20sp"
+            android:layout_marginBottom="20sp"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20sp"
-        android:layout_marginBottom="20sp"
-        android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:width="150sp"
+                android:text="Fizetett összeg (Ft): "
+                android:textStyle="bold" />
 
-        <TextView
+            <EditText
+                android:id="@+id/actualmoney"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:inputType="numberDecimal" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:width="150sp"
-            android:text="Tankolás helye: " />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20sp"
+            android:layout_marginBottom="20sp"
+            android:orientation="horizontal">
 
-        <Spinner
-            android:id="@+id/actualgasstation"
-            android:layout_width="200sp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:width="150sp"
+                android:text="Tankolás helye: " />
+
+            <Spinner
+                android:id="@+id/actualgasstation"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/saveRefuelingBtn"
+            android:layout_width="80sp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="right"
+            android:layout_marginRight="20sp"
+            android:height="80sp"
+            android:background="#3D5AFE"
+            android:padding="0sp"
+            android:shadowColor="#000000"
+            android:shadowDx="0"
+            android:shadowDy="10"
+            android:shadowRadius="0"
+            android:text="+"
+            android:textColor="#FFFFFF"
+            android:textSize="50sp" />
+
     </LinearLayout>
-
-
-    <Button
-        android:id="@+id/save_refuelingBtn"
-        android:layout_width="80sp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:height="80sp"
-        android:background="#3D5AFE"
-        android:padding="0sp"
-        android:shadowColor="#000000"
-        android:shadowDx="0"
-        android:shadowDy="10"
-        android:shadowRadius="0"
-        android:text="+"
-        android:textColor="#FFFFFF"
-        android:textSize="50sp" />
-
-</LinearLayout>
+</layout>

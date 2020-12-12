@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FullTank You</string>
+    <string name="app_name">Tank You</string>
     <string-array name="gas_stations">
         <item>-</item>
         <item>Shell</item>
