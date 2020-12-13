@@ -9,8 +9,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
 
+    private lateinit var binding: ActivityMainBinding
     lateinit var actualKm: EditText
     lateinit var actualL: EditText
     lateinit var actualPrice: EditText
