@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.example.fulltankyou.databinding.FragmentNewLoadBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
 class NewLoadFragment : Fragment(){
+
 
 
     private lateinit var binding: FragmentNewLoadBinding
@@ -69,7 +71,6 @@ class NewLoadFragment : Fragment(){
             saveRefueling()
         }
     }
-
 
     private fun saveRefueling() {
         var actualKmNum = 0.0

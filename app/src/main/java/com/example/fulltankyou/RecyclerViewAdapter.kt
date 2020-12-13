@@ -4,20 +4,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fulltankyou.databinding.FragmentFuelStoryBinding
 import com.example.fulltankyou.db.FuelEntity
+import kotlinx.android.synthetic.main.fragment_fuel_story.view.*
 
-class RecyclerViewAdapter(private val listener: RowClickListener, private val storyBinding: FragmentFuelStoryBinding): RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
+class RecyclerViewAdapter(): RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
     var items = ArrayList<FuelEntity>()
 
     fun setListData(data: ArrayList<FuelEntity>){
         this.items = data
+        this.items = data
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewAdapter.MyViewHolder {
+
         val inflater = LayoutInflater.from(parent.context).inflate(R.layout.fragment_fuel_story, parent, false)
-        return MyViewHolder(inflater,listener, storyBinding)
+
+        return MyViewHolder(inflater)
     }
 
     override fun getItemCount(): Int {
@@ -25,35 +28,21 @@ class RecyclerViewAdapter(private val listener: RowClickListener, private val st
     }
 
     override fun onBindViewHolder(holder: RecyclerViewAdapter.MyViewHolder, position: Int) {
-        holder.itemView.setOnClickListener {
-            listener.onItemClickListener(items[position])
-            }
         holder.bind(items[position])
     }
 
-    class MyViewHolder(view: View, private val listener: RowClickListener, private val storyBinding: FragmentFuelStoryBinding) : RecyclerView.ViewHolder(view){
+    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
 
-        private val tvDate = storyBinding.tvDate
-        private val tvCarKm = storyBinding.tvCarKm
-        private val tvFuel = storyBinding.tvFuel
-        private val tvPrice = storyBinding.tvPrice
-        private val deleteLoadID = storyBinding.deleteLoadID
+        private val tvDate = view.tvDate
+        private val tvCarKm = view.tvCarKm
+        private val tvFuel = view.tvFuel
+        private val tvPrice = view.tvPrice
 
         fun bind(data: FuelEntity){
-            tvDate.text = data.date
-            tvCarKm.text = data.carKm.toString()
-            tvFuel.text = data.fuel.toString()
-            tvPrice.text = data.price.toString()
-
-            deleteLoadID.setOnClickListener {
-                listener.onDeleteFuelLoadClickListener(data)
-                }
+            tvDate.text = "Dátum: " + data.date
+            tvCarKm.text = "Km óra állása: " + data.carKm.toString()
+            tvFuel.text = "Tankolt üzemanyag: " + data.fuel.toString() + " l"
+            tvPrice.text = "Fizetett összeg: " + data.price.toString() + " Ft"
         }
     }
-
-    interface RowClickListener{
-        fun onDeleteFuelLoadClickListener(load: FuelEntity)
-        fun onItemClickListener(load: FuelEntity)
-    }
-
 }

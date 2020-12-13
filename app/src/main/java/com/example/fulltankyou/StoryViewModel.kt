@@ -8,10 +8,13 @@ import com.example.fulltankyou.db.RoomAppDb
 
 class StoryViewModel(app: Application): AndroidViewModel(app) {
 
-    lateinit var allLoads: MutableLiveData<List<FuelEntity>>
+    var allLoads: MutableLiveData<List<FuelEntity>> = MutableLiveData()
+
+
 
     init{
         allLoads = MutableLiveData()
+        getAllFuelLoads()
     }
 
     fun getAllFuelLoadsObservers(): MutableLiveData<List<FuelEntity>>{
