@@ -4,12 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.fulltankyou.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         val loadHintsFragment = LoadHintsFragment()
 
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.flFragment, newLoadFragment)
+            replace(R.id.flFragment, fuelStoryFragment)
             commit()
         }
 
@@ -59,7 +58,5 @@ class MainActivity : AppCompatActivity() {
                 commit()
             }
         }
-
     }
 }
-

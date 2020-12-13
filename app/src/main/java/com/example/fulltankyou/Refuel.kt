@@ -9,9 +9,9 @@ class Refuel {
     private var actualKm: Double
     private var price: Double
     private var stationName: String
-    private var date: Date
+    private var date: String
 
-    constructor(fuelLiter: Double, actualKm: Double, price: Double, stationName: String, date: Date){
+    constructor(fuelLiter: Double, actualKm: Double, price: Double, stationName: String, date: String){
         this.fuelLiter = fuelLiter
         this.actualKm = actualKm
         this.price = price
@@ -20,7 +20,7 @@ class Refuel {
     }
 
     fun getDateString(): String{
-        return SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(this.date)
+        return this.date
     }
 
     fun getFuelLiter():Double{

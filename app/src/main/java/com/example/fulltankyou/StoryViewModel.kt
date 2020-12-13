@@ -10,8 +10,6 @@ class StoryViewModel(app: Application): AndroidViewModel(app) {
 
     var allLoads: MutableLiveData<List<FuelEntity>> = MutableLiveData()
 
-
-
     init{
         allLoads = MutableLiveData()
         getAllFuelLoads()
@@ -31,12 +29,6 @@ class StoryViewModel(app: Application): AndroidViewModel(app) {
     fun insertLoadInfo(entity: FuelEntity){
         var fuelDao = RoomAppDb.getAppDatabase(getApplication())?.fuelDao()
         fuelDao?.insertFuelLoad(entity)
-        getAllFuelLoads()
-    }
-
-    fun updateLoadInfo(entity: FuelEntity){
-        var fuelDao = RoomAppDb.getAppDatabase(getApplication())?.fuelDao()
-        fuelDao?.updateFuelLoad(entity)
         getAllFuelLoads()
     }
 

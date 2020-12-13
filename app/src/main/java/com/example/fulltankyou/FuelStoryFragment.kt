@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.StaggeredGridLayoutManager.VERTICAL
+
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -28,28 +28,29 @@ class FuelStoryFragment : Fragment() {
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
+        refresh()
+    }
+
+    fun refresh(){
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
             recyclerViewAdapter = RecyclerViewAdapter()
             adapter = recyclerViewAdapter
-
-            val divider = DividerItemDecoration(activity, VERTICAL)
-            addItemDecoration(divider)
         }
 
-        viewModel = ViewModelProviders.of(this).get(StoryViewModel::class.java)
+        val divider = DividerItemDecoration(activity, LinearLayoutManager.HORIZONTAL)
+        recyclerView.addItemDecoration(divider)
 
+        viewModel = ViewModelProviders.of(this).get(StoryViewModel::class.java)
         viewModel.getAllFuelLoadsObservers().observe(viewLifecycleOwner, Observer {
             recyclerViewAdapter.setListData(ArrayList(it))
             recyclerViewAdapter.notifyDataSetChanged()
+
+            var lastLoadData = recyclerViewAdapter.getMyItems().takeLast(1)[0]
+            val last = Refuel(lastLoadData.fuel, lastLoadData.carKm, lastLoadData.price, lastLoadData.gasstation, lastLoadData.date)
+
+            lastFuelLoad.last = last
+
         })
-
-//        viewModel.insertLoadInfo(FuelEntity(1002, "2020.01.12", 10000.0, 20.0, 10000.0))
-//        viewModel.insertLoadInfo(FuelEntity(1003, "2020.02.12", 11000.0, 28.0, 18000.0))
-
-
-       // val fuelLoad = FuelEntity(0, "2021.08.07.",102340.0,22.0,8050.0)
-       // viewModel.insertLoadInfo(fuelLoad)
-
     }
 }

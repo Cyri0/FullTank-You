@@ -18,7 +18,7 @@ abstract class RoomAppDb: RoomDatabase() {
                 INSTANCE = Room.databaseBuilder<RoomAppDb>(
                     context.applicationContext,
                     RoomAppDb::class.java,
-                    "AppDB")
+                    "TankYouFuelLoadDB")
                     .allowMainThreadQueries()
                     .build()
             }

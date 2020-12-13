@@ -14,5 +14,4 @@ class FuelStatsFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_fuel_stats, container, false)
     }
-
 }

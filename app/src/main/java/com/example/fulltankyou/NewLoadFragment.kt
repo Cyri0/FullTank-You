@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.fulltankyou.databinding.FragmentNewLoadBinding
+import com.example.fulltankyou.db.FuelEntity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -24,7 +25,7 @@ class NewLoadFragment : Fragment(){
     lateinit var gasStation: Spinner
     lateinit var actualDate: TextView
     lateinit var currentDate: String
-
+    lateinit var viewModel: StoryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,7 +87,7 @@ class NewLoadFragment : Fragment(){
         if(!actualPrice.text.isNullOrEmpty())
             actualPriceNum = actualPrice.text.toString().toDouble()
 
-        val gasstation = gasStation.getSelectedItem().toString();
+        val gasStation = gasStation.getSelectedItem().toString();
 
         var errorMsg = ""
 
@@ -101,9 +102,23 @@ class NewLoadFragment : Fragment(){
         }
 
         if(errorMsg.isEmpty()) {
-            val actual = Refuel(actualLNum, actualKmNum, actualPriceNum, gasstation, Date())
-            calculateConsumption(Refuel(25.0,150000.0, 87000.0, "-", Date()), actual)
+
+            val actual = Refuel(actualLNum, actualKmNum, actualPriceNum, gasStation, currentDate)
+
+            //TODO Ez még csak egy beírt teszt tankolás... Nem a DB-ből jön
+            calculateConsumption(lastFuelLoad.last, actual)
             println(actual)
+
+            val id = SimpleDateFormat("yyMMddHHmmss").format(Date()).toString()
+            println(lastFuelLoad.last)
+
+            viewModel = ViewModelProviders.of(this).get(StoryViewModel::class.java)
+
+            viewModel.insertLoadInfo(FuelEntity(id.toLong(), actual.getDateString(), actual.getActualKm(), actual.getFuelLiter(), actual.getPrice(), actual.getStationName()))
+
+            actualKm.text = null
+            actualL.text = null
+            actualPrice.text = null
 
         } else{
            Toast.makeText(super.getContext() , errorMsg, Toast.LENGTH_SHORT).show()
@@ -114,8 +129,8 @@ class NewLoadFragment : Fragment(){
 
         Toast.makeText(super.getContext(),
             "Megtett táv: " + new.getDistanceTraveled(last) +
-                    " Fogyasztás 100 km-en: " + "%.2f".format(new.getPetrolPerHundredKm(last)) + "l" +
-                    " egy liter ára: " + "%.1f".format(new.getPricePerLiter()),
+                  " Fogyasztás 100 km-en: " + "%.2f".format(new.getPetrolPerHundredKm(last)) + "l" +
+                  " egy liter ára: " + "%.1f".format(new.getPricePerLiter()),
             Toast.LENGTH_SHORT).show()
     }
 }

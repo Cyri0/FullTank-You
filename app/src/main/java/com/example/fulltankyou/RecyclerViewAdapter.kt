@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fulltankyou.db.FuelEntity
-import kotlinx.android.synthetic.main.fragment_fuel_story.view.*
+import kotlinx.android.synthetic.main.story_card_layout.view.*
 
 class RecyclerViewAdapter(): RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
@@ -13,18 +13,21 @@ class RecyclerViewAdapter(): RecyclerView.Adapter<RecyclerViewAdapter.MyViewHold
 
     fun setListData(data: ArrayList<FuelEntity>){
         this.items = data
-        this.items = data
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewAdapter.MyViewHolder {
 
-        val inflater = LayoutInflater.from(parent.context).inflate(R.layout.fragment_fuel_story, parent, false)
+        val inflater = LayoutInflater.from(parent.context).inflate(R.layout.story_card_layout, parent, false)
 
         return MyViewHolder(inflater)
     }
 
     override fun getItemCount(): Int {
         return items.size
+    }
+
+    fun getMyItems(): ArrayList<FuelEntity>{
+        return this.items
     }
 
     override fun onBindViewHolder(holder: RecyclerViewAdapter.MyViewHolder, position: Int) {
@@ -39,10 +42,12 @@ class RecyclerViewAdapter(): RecyclerView.Adapter<RecyclerViewAdapter.MyViewHold
         private val tvPrice = view.tvPrice
 
         fun bind(data: FuelEntity){
-            tvDate.text = "Dátum: " + data.date
+            tvDate.text = data.date + " - " + data.gasstation
             tvCarKm.text = "Km óra állása: " + data.carKm.toString()
             tvFuel.text = "Tankolt üzemanyag: " + data.fuel.toString() + " l"
             tvPrice.text = "Fizetett összeg: " + data.price.toString() + " Ft"
         }
+
+
     }
 }
