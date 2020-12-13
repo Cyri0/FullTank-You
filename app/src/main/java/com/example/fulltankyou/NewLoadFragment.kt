@@ -1,27 +1,21 @@
 package com.example.fulltankyou
 
+
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import com.example.fulltankyou.databinding.FragmentNewLoadBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NewLoadFragment : Fragment(){
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_new_load, container, false)
-    }
-}
 
-
-
-
-/*
-
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: FragmentNewLoadBinding
     lateinit var actualKm: EditText
     lateinit var actualL: EditText
     lateinit var actualPrice: EditText
@@ -29,9 +23,17 @@ class NewLoadFragment : Fragment(){
     lateinit var actualDate: TextView
     lateinit var currentDate: String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding =  DataBindingUtil.inflate(inflater,
+        R.layout.fragment_new_load, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
 
         actualDate = binding.actualdate
         actualKm = binding.actualkm
@@ -44,13 +46,22 @@ class NewLoadFragment : Fragment(){
         actualDate.text = currentDate
 
         gasStation = binding.actualgasstation
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.gas_stations,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            gasStation.adapter = adapter
+
+        gasStation?.adapter = activity?.applicationContext?.let {
+            ArrayAdapter(
+                it,
+                R.layout.support_simple_spinner_dropdown_item,
+                super.getResources().getStringArray(R.array.gas_stations)
+            )
+        } as SpinnerAdapter
+
+        gasStation?.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                println("error")
+            }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val type = parent?.getItemAtPosition(position).toString()
+            }
         }
 
         val saveRefuelingBtn: Button = binding.saveRefuelingBtn;
@@ -58,6 +69,7 @@ class NewLoadFragment : Fragment(){
             saveRefueling()
         }
     }
+
 
     private fun saveRefueling() {
         var actualKmNum = 0.0
@@ -90,24 +102,19 @@ class NewLoadFragment : Fragment(){
         if(errorMsg.isEmpty()) {
             val actual = Refuel(actualLNum, actualKmNum, actualPriceNum, gasstation, Date())
             calculateConsumption(Refuel(25.0,150000.0, 87000.0, "-", Date()), actual)
-            println(actual.getDateString())
+            println(actual)
 
         } else{
-            Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show()
+           Toast.makeText(super.getContext() , errorMsg, Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun calculateConsumption(last: Refuel, new:Refuel){
-        var distanceTraveled = new.getActualKm() - last.getActualKm()
-        var petrolPerHundredKm =  (new.getFuelLiter() / distanceTraveled) * 100
-        var pricePerLiter = new.getPrice() / new.getFuelLiter()
 
-        Toast.makeText(this,
-                    "Megtett táv: " + distanceTraveled +
-                        " Fogyasztás 100 km-en: " + "%.2f".format(petrolPerHundredKm) + "l" +
-                        " egy liter ára: " + "%.1f".format(pricePerLiter),
-                Toast.LENGTH_SHORT).show()
-    } */
-
-
-
+        Toast.makeText(super.getContext(),
+            "Megtett táv: " + new.getDistanceTraveled(last) +
+                    " Fogyasztás 100 km-en: " + "%.2f".format(new.getPetrolPerHundredKm(last)) + "l" +
+                    " egy liter ára: " + "%.1f".format(new.getPricePerLiter()),
+            Toast.LENGTH_SHORT).show()
+    }
+}

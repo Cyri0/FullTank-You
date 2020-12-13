@@ -41,7 +41,23 @@ class Refuel {
         return stationName
     }
 
+
+    fun getPricePerLiter(): Double {
+        return this.getPrice() / this.getFuelLiter()
+    }
+
+
+
+    fun getDistanceTraveled(last: Refuel):Double{
+        return this.getActualKm() - last.getActualKm();
+    }
+    fun getPetrolPerHundredKm(last: Refuel):Double{
+        return (this.getFuelLiter() / this.getDistanceTraveled(last)) * 100
+    }
+
+
     override fun toString(): String {
         return "Refuel(fuelLiter=$fuelLiter, actualKm=$actualKm, price=$price, stationName='$stationName')"
     }
+
 }

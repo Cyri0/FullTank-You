@@ -1,8 +1,8 @@
 package com.example.fulltankyou
 
-import android.databinding.DataBindingUtil
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.example.fulltankyou.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
