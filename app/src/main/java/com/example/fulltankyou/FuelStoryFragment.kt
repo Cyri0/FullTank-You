@@ -46,10 +46,19 @@ class FuelStoryFragment : Fragment() {
             recyclerViewAdapter.setListData(ArrayList(it))
             recyclerViewAdapter.notifyDataSetChanged()
 
-            var lastLoadData = recyclerViewAdapter.getMyItems().takeLast(1)[0]
-            val last = Refuel(lastLoadData.fuel, lastLoadData.carKm, lastLoadData.price, lastLoadData.gasstation, lastLoadData.date)
 
-            lastFuelLoad.last = last
+            try {
+                var lastLoadData = recyclerViewAdapter.getMyItems()[0]
+                val last = Refuel(lastLoadData.fuel, lastLoadData.carKm, lastLoadData.price, lastLoadData.gasstation, lastLoadData.date)
+                lastFuelLoad.last = last
+                var penultLoadData = recyclerViewAdapter.getMyItems()[1]
+                val penult = Refuel(penultLoadData.fuel, penultLoadData.carKm, penultLoadData.price, penultLoadData.gasstation, penultLoadData.date)
+                lastFuelLoad.penult = penult
+            }
+            catch (e: Exception) {
+                // handler TODO
+                print("\nHiba az adatbázis kiolvasásánál!\n")
+            }
 
         })
     }

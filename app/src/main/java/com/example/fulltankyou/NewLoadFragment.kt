@@ -105,7 +105,6 @@ class NewLoadFragment : Fragment(){
 
             val actual = Refuel(actualLNum, actualKmNum, actualPriceNum, gasStation, currentDate)
 
-            //TODO Ez még csak egy beírt teszt tankolás... Nem a DB-ből jön
             calculateConsumption(lastFuelLoad.last, actual)
             println(actual)
 
@@ -115,6 +114,14 @@ class NewLoadFragment : Fragment(){
             viewModel = ViewModelProviders.of(this).get(StoryViewModel::class.java)
 
             viewModel.insertLoadInfo(FuelEntity(id.toLong(), actual.getDateString(), actual.getActualKm(), actual.getFuelLiter(), actual.getPrice(), actual.getStationName()))
+
+            try{
+                lastFuelLoad.penult = lastFuelLoad.last
+                lastFuelLoad.last = actual
+            }
+            catch (e: Exception) {
+                print("\nProbléma a penult <-- last áttöltésnél\n")
+            }
 
             actualKm.text = null
             actualL.text = null
