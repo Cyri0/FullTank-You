@@ -3,7 +3,6 @@ package com.example.fulltankyou.db
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.math.BigInteger
 
 @Entity(tableName = "loadInfo")
 data class FuelEntity(

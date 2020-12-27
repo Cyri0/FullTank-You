@@ -1,8 +1,5 @@
 package com.example.fulltankyou
 
-import java.text.SimpleDateFormat
-import java.util.*
-
 class Refuel {
 
     private var fuelLiter: Double

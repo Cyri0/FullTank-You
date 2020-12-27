@@ -3,6 +3,7 @@ package com.example.fulltankyou
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.example.fulltankyou.db.FuelEntity
 import com.example.fulltankyou.db.RoomAppDb
 
@@ -12,6 +13,10 @@ class StoryViewModel(app: Application): AndroidViewModel(app) {
 
     init{
         allLoads = MutableLiveData()
+        Transformations.map(allLoads){
+            it
+            // itt van a LiveData transzformáció önmagára TODO
+        }
         getAllFuelLoads()
     }
 
